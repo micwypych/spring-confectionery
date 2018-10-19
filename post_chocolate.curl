@@ -1,0 +1,1 @@
+curl --request POST http://localhost:8080/chocolates --data {"id":"ch8","name":"kokosanka","nuts":"brak","chocolate":"gorzka","ganache":"kokosowe","description":"szeroki opis czekoladki","mass":18} --header Content-Type: application/json
