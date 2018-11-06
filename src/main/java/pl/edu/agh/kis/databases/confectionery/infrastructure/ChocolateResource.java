@@ -1,11 +1,8 @@
 package pl.edu.agh.kis.databases.confectionery.infrastructure;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,8 +13,16 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 public class ChocolateResource {
+
+    @Autowired
+    public ChocolateResource(ChocolateRepository chocolateRepository) {
+        this.chocolateRepository = chocolateRepository;
+    }
 
     @GetMapping("/chocolates")
     public List<Chocolate> retrieveAllChocolates() {
@@ -47,8 +52,32 @@ public class ChocolateResource {
         return ResponseEntity.created(location).build();
     }
 
-    
+    @PutMapping("/chocolates/{id}")
+    public Resource<Chocolate> updateChocolate(@PathVariable String id, @RequestBody Chocolate newChocolate) {
+        Optional<Chocolate> chocolate = chocolateRepository.findById(id);
 
-    @Autowired
-    private ChocolateRepository chocolateRepository;
+        Chocolate saved;
+        if (!chocolate.isPresent()) {
+            newChocolate.setId(id);
+            saved = chocolateRepository.save(newChocolate);
+        } else {
+            Chocolate updated = chocolate.get();
+            updated.updateWith(newChocolate);
+            saved = chocolateRepository.save(updated);
+        }
+
+        Resource<Chocolate> resource = new Resource<>(saved);
+        resource.add(linkTo(methodOn(this.getClass()).retrieveAllChocolates()).withRel("all-chocolates"));
+        resource.add(linkTo(methodOn(this.getClass()).retrieveChocolate(id)).withSelfRel());
+        return resource;
+    }
+
+    @DeleteMapping("/chocolates/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteChocolate(@PathVariable String id) {
+        chocolateRepository.deleteById(id);
+    }
+
+
+    private final ChocolateRepository chocolateRepository;
 }

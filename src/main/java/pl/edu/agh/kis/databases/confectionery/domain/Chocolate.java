@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.money.MonetaryAmount;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="czekoladki")
@@ -31,4 +34,14 @@ public class Chocolate {
     private MonetaryAmount cost;
     @Column(name="masa")
     private int mass;
+
+    public void updateWith(Chocolate newChocolate) {
+        setName(newChocolate.getName());
+        setNuts(newChocolate.getNuts());
+        setChocolate(newChocolate.getChocolate());
+        setGanache(newChocolate.getGanache());
+        setDescription(newChocolate.getDescription());
+        setCost(newChocolate.getCost());
+        setMass(newChocolate.getMass());
+    }
 }
