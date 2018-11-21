@@ -53,15 +53,15 @@ Aktulanie zarejestrowane punkty wejścia są wyświetlane w logach aplikacji prz
 2018-11-21 15:20:46.204  INFO 20073 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/chocolates/{id}],methods=[GET]}" onto public org.springframework.hateoas.Resource<pl.edu.agh.kis.databases.confectionery.domain.Chocolate> pl.edu.agh.kis.databases.confectionery.infrastructure.ChocolateResource.retrieveChocolate(java.lang.String)
 ```
 
-informuje o tym, że żadania do URI **/chocolates** z metodą **GET** są obsługiwane przez metodę `public List<Chocolate> retrieveAllChocolates()` z klasy [ChocolateResource](src/main/java/pl/edu/agh/kis/databses/confectionary/infrastructure/ChocolateResource.java) znajdującą się w pakiecie `pl.edu.agh.kis.databases.confectionery.infrastructure`. Z kolei żądanie **GET** do URI **/chocolates/{id}**, gdzie zamiast ciągu `{id}` zostanie podstawiony inny ciąg są obsługiwane przez metodę `public Resource<Chocolate> retrieveChocolate(java.lang.String)` z tej samej klasy.
+informuje o tym, że żadania do URI **/chocolates** z metodą **GET** są obsługiwane przez metodę `public List<Chocolate> retrieveAllChocolates()` z klasy [ChocolateResource](src/main/java/pl/edu/agh/kis/databases/confectionery/infrastructure/ChocolateResource.java) znajdującą się w pakiecie `pl.edu.agh.kis.databases.confectionery.infrastructure`. Z kolei żądanie **GET** do URI **/chocolates/{id}**, gdzie zamiast ciągu `{id}` zostanie podstawiony inny ciąg są obsługiwane przez metodę `public Resource<Chocolate> retrieveChocolate(java.lang.String)` z tej samej klasy.
 
 ### opis mapowania obiektowo-relacyjnego
 
-Projekt wykorzystuje standardowe adnotacja JPA do opisania sposobu mapowania klas na relacje. Klasy mapowane w projekcie znajdują się w pakiecie `pl.edu.agh.kis.databases.confectionery.domain` i jest to m.in. klasa [Chocolate](src/main/java/pl/edu/agh/kis/databses/confectionary/domain/Chocolate.java).
+Projekt wykorzystuje standardowe adnotacja JPA do opisania sposobu mapowania klas na relacje. Klasy mapowane w projekcie znajdują się w pakiecie `pl.edu.agh.kis.databases.confectionery.domain` i jest to m.in. klasa [Chocolate](src/main/java/pl/edu/agh/kis/databases/confectionery/domain/Chocolate.java).
 
 ### opis dostępu do do bazy danych
 
-Dostęp do bazy danych odbywa się za pomocą instancji implementującej interface [ChocolateRepository](src/main/java/pl/edu/agh/kis/databses/confectionary/infrastructure/ChocolateRepository.java), instancja ta jest tworzona dynamicznie przez bibliotekę [spring-data-jpa](https://spring.io/guides/gs/accessing-data-jpa/). 
+Dostęp do bazy danych odbywa się za pomocą instancji implementującej interface [ChocolateRepository](src/main/java/pl/edu/agh/kis/databases/confectionery/infrastructure/ChocolateRepository.java), instancja ta jest tworzona dynamicznie przez bibliotekę [spring-data-jpa](https://spring.io/guides/gs/accessing-data-jpa/) i posiada również metody z interfejsu, który rozszerza. 
 
 
 ## inny podobny projekty 
